@@ -4,6 +4,7 @@ fry threads vocabs.loader ;
 IN: editors.emacs
 
 SYMBOL: emacsclient-path
+SYMBOL: use-emacsclient
 
 HOOK: default-emacsclient os ( -- path )
 
@@ -15,7 +16,7 @@ M: object default-emacsclient ( -- path ) "emacsclient" ;
             [ emacsclient-path get-global ]
             [ default-emacsclient dup emacsclient-path set-global ]
         } 0|| ,
-        "--no-wait" ,
+        use-emacsclient get-global [ "--no-wait" , ] when
         number>string "+" prepend ,
         ,
     ] { } make
